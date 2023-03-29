@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - include:
+      file: db/migration/01-create_table_users.sql
+  - include:
+      file: db/migration/02-create_table_profiles.sql
+  - include:
+      file: db/migration/03-create_table_users_profiles.sql
+  - include:
+      file: db/migration/04-create-revision-tables.sql
+  - include:
+      file: db/migration/05-create_table_users_profiles.sql
+  - include:
+      file: db/migration/06-create_table_access_groups.sql
+  - include:
+      file: db/migration/07-create_table_access_groups_users.sql
+  - include:
+      file: db/migration/08-create_table_profiles_access_groups.sql
+  - include:
+      file: db/migration/09-create_table_cars.sql
+
+
+
