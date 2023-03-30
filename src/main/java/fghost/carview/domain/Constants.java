@@ -6,8 +6,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Constants {
     //USERS
-    public static final String USER_NOT_PERSISTED = "user.not.persisted";
     public static final String USER_NOT_FOUND = "user.not.found";
+    public static final String USER_NOT_PERSISTED = "user.not.persisted";
     public static final String USER_PHOTO_NOT_FOUND = "user.photo.not.found";
     public static final String USER_PHOTO_NOT_PERSISTED = "user;photo.not.persisted";
     public static final String USER_DELETION_ERROR = "user.deletion.error";

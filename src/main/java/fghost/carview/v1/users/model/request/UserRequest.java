@@ -16,7 +16,7 @@ public class UserRequest {
     @JsonProperty(value = "nome")
     private String name;
 
-    @NotBlank(message = "{user.lastName.not.null}")
+    @NotBlank(message = "{user.last.name.not.null}")
     @Size(max = 100, message = "{user.lastName.max.size}")
     @JsonProperty(value = "sobrenome")
     private String lastName;
