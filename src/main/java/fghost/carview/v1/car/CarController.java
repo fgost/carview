@@ -1,6 +1,5 @@
 package fghost.carview.v1.car;
 
-import fghost.carview.config.properties.ApplicationProperties;
 import fghost.carview.utils.pagination.DefaultWrapper;
 import fghost.carview.utils.pagination.PaginationRequest;
 import fghost.carview.v1.car.model.CarRequest;
@@ -47,6 +46,19 @@ public class CarController {
         URI uri = getURIFor(dto.getCode());
         response.addHeader(HttpHeaders.LOCATION, uri.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CarResponse> update(@PathVariable(name = "id") String code,
+                                              @Valid @RequestBody CarRequest carRequest) {
+        var response = carFacade.update(code, carRequest);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteByCode(@PathVariable(name = "id") String code) {
+        carFacade.deleteByCode(code);
+        return ResponseEntity.noContent().build();
     }
 
     private URI getURIFor(String code) {

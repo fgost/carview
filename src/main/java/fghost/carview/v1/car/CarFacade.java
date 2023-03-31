@@ -8,7 +8,6 @@ import fghost.carview.v1.car.mapper.CarResponseMapper;
 import fghost.carview.v1.car.model.CarRequest;
 import fghost.carview.v1.car.model.CarResponse;
 import fghost.carview.v1.car.service.CarService;
-import fghost.carview.v1.users.mapper.UserResponseMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -43,4 +42,16 @@ public class CarFacade {
         var dto = CarResponseMapper.INSTANCE.mapEntityToResponse(savedEntity);
         return dto;
     }
+
+    public CarResponse update(String code, CarRequest request) {
+        var entity = CarRequestMapper.INSTANCE.mapModelToEntity(request);
+        var savedEntity = carService.update(code, entity);
+        var dto = CarResponseMapper.INSTANCE.mapEntityToResponse(savedEntity);
+        return dto;
+    }
+
+    public void deleteByCode(String code) {
+        carService.deleteByCode(code);
+    }
+
 }

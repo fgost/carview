@@ -19,7 +19,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/access-group")
+@RequestMapping("/carview/v1/access-group")
 public class AccessGroupController {
     private final AccessGroupFacade facade;
 

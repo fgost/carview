@@ -50,13 +50,13 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}/preferencias")
+    @GetMapping("/{id}/preferences")
     public ResponseEntity<UserResponsePreference> getPreferences(@PathVariable(name = "id") String code) {
         var response = usersFacade.getPreferences(code);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}/permissoes")
+    @GetMapping("/{id}/permission")
     public ResponseEntity<DefaultWrapper> getPermissions(
             @PathVariable(name = "id") String code,
             PaginationRequest paginationRequest) {
@@ -64,13 +64,13 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(value = "/{id}/fotos")
+    @GetMapping(value = "/{id}/image")
     public ResponseEntity<?> getProfilePhotoInfo(@PathVariable(name = "id") String code) {
         var response = usersFacade.getProfilePhotoInfo(code);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(value = "/{id}/fotos", produces = "image/*")
+    @GetMapping(value = "/{id}/image", produces = "image/*")
     public ResponseEntity<?> getProfilePhoto(@PathVariable(name = "id") String code) {
         var response = usersFacade.getProfilePhoto(code);
         if (properties.getStorage().getImpl().isRedirect()) {
@@ -104,26 +104,33 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}/preferencias")
+    @PutMapping("/{id}/preferences")
     public ResponseEntity<UserResponsePreference> updatePreferences(@PathVariable(name = "id") String code,
                                                                     @RequestBody Set<@Valid Preference> preferences) {
         var response = usersFacade.updatePreferences(code, preferences);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}/perfis")
+    @PutMapping("/{id}/profiles")
     public ResponseEntity<UserResponse> updateProfiles(@PathVariable(name = "id") String code,
                                                        @Valid @RequestBody Set<OnlyCodeDto> ids) {
         var response = usersFacade.updateProfiles(code, ids);
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}/foto")
+    @PutMapping("/{id}/image")
     public ResponseEntity<?> saveImage(@PathVariable(name = "id") String code, MultipartFile file) throws IOException {
 
         var dto = usersFacade.saveImage(code, file);
         return ResponseEntity
                 .ok(dto);
+    }
+
+    @PutMapping("/{id}/car")
+    public ResponseEntity<UserResponse> updateCar(@PathVariable(name = "id") String code,
+                                                  @Valid @RequestBody Set<OnlyCodeDto> ids) {
+        var response = usersFacade.updateCar(code, ids);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")

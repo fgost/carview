@@ -33,4 +33,6 @@ public class Constants {
     //CAR
     public static final String CAR_DUPLICATED = "car.duplicated";
     public static final String CAR_NOT_FOUND = "car.not.found";
+    public static final String CAR_NOT_PERSISTED = "car.not.persisted";
+    public static final String CAR_DELETION_ERROR = "car.deletion.error";
 }

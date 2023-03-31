@@ -5,6 +5,7 @@ import fghost.carview.exception.domain.ObjectNotFoundException;
 import fghost.carview.exception.util.ExceptionUtils;
 import fghost.carview.utils.dto.OnlyCodeDto;
 import fghost.carview.utils.pagination.PaginationUtils;
+import fghost.carview.v1.car.service.CarService;
 import fghost.carview.v1.profiles.service.ProfileService;
 import fghost.carview.v1.storage.StorageService;
 import fghost.carview.v1.users.domain.Preference;
@@ -32,6 +33,7 @@ public class UserService {
     private final UserRepository repository;
     private final UserPhotoRepository photoRepository;
     private final ProfileService profileService;
+    private final CarService carService;
     private final PasswordEncoder passwordEncoder;
     private final StorageService storageService;
 
@@ -168,6 +170,16 @@ public class UserService {
             entity.getProfiles().add(profile);
         });
 
+        return repository.save(entity);
+    }
+
+    @Transactional
+    public UserEntity updateCar(String code, Set<OnlyCodeDto> inputList) {
+        var entity = findByCode(code);
+        inputList.forEach(input -> {
+            var car = carService.findByCode(input.getCode());
+            entity.getCars().add(car);
+        });
         return repository.save(entity);
     }
 

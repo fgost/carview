@@ -1,5 +1,6 @@
 package fghost.carview.v1.users.domain;
 
+import fghost.carview.v1.car.domain.CarEntity;
 import fghost.carview.v1.profiles.domain.ProfileEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,14 @@ public class UserEntity implements UserDetails, Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "profile_id"))
     private List<ProfileEntity> profiles;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_cars",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "cars_id")
+    )
+    private List<CarEntity> cars;
 
     @PrePersist
     private void setCode() {
@@ -94,6 +103,14 @@ public class UserEntity implements UserDetails, Serializable {
         Map<String, String> map = new HashMap<>();
         preferences.forEach(p -> {
             map.put(p.getPreferenceKey(), p.getPreferenceValue());
+        });
+        return map;
+    }
+
+    public Map<String, String> getCarAsMap(){
+        Map<String, String> map = new HashMap<>();
+        cars.forEach(p -> {
+            map.put(p.getCarModel(),p.getYear());
         });
         return map;
     }
