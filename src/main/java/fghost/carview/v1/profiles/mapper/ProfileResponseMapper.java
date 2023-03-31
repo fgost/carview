@@ -5,10 +5,12 @@ import fghost.carview.v1.profiles.model.response.ProfileResponse;
 import fghost.carview.v1.profiles.model.response.ProfileResponseSummary;
 import fghost.carview.v1.profiles.model.response.ProfileResponseWithAccessGroups;
 import fghost.carview.v1.profiles.model.response.ProfileResponseWithAccessGroupsAndPermissions;
+import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Collection;
 
+@Mapper
 public interface ProfileResponseMapper {
     ProfileResponseMapper INSTANCE = Mappers.getMapper(ProfileResponseMapper.class);
 

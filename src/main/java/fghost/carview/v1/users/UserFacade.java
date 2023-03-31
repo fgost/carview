@@ -100,6 +100,12 @@ public class UserFacade {
         return dto;
     }
 
+    public UserResponse updateCar(String code, Set<OnlyCodeDto> inputList) {
+        var entity = usersService.updateCar(code, inputList);
+        var dto = UserResponseMapper.INSTANCE.mapEntityToUserResponse(entity);
+        return dto;
+    }
+
     public StorageService.File saveImage(String code, MultipartFile dto) {
         try {
             var fullPath = String.format("%s_%s%s",

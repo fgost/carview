@@ -48,4 +48,31 @@ public class CarService {
             throw ExceptionUtils.buildSameIdentifierException(Constants.CAR_DUPLICATED);
         }
     }
+
+    @Transactional
+    public CarEntity update(String code, CarEntity entity) {
+        var existentEntity = findByCode(code);
+        existentEntity.setCode(code);
+        existentEntity.setCarModel(entity.getCarModel());
+        existentEntity.setType(entity.getType());
+        existentEntity.setColor(entity.getColor());
+        existentEntity.setAutoMaker(entity.getAutoMaker());
+        existentEntity.setYear(entity.getYear());
+        var dto = existentEntity;
+        try {
+            return repository.save(dto);
+        }catch (Exception e) {
+            throw ExceptionUtils.buildNotPersistedException(Constants.CAR_NOT_PERSISTED);
+        }
+    }
+
+    @Transactional
+    public void deleteByCode(String code) {
+        try{
+            var entity = findByCode(code);
+            repository.delete(entity);
+        }catch (Exception e) {
+            throw ExceptionUtils.buildNotPersistedException(Constants.CAR_DELETION_ERROR);
+        }
+    }
 }
