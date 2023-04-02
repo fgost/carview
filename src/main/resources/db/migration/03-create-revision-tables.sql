@@ -1,5 +1,6 @@
---changeset fghost:4
+ --liquibase formatted sql
 
+--changeset fghost:3
 CREATE TABLE IF NOT EXISTS revinfo (
     rev integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
     revtstmp bigint DEFAULT NULL,
