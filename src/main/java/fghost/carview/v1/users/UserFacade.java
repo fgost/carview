@@ -14,6 +14,7 @@ import fghost.carview.v1.users.mapper.UserRequestMapper;
 import fghost.carview.v1.users.mapper.UserResponseMapper;
 import fghost.carview.v1.users.model.request.UserRequest;
 import fghost.carview.v1.users.model.response.UserResponse;
+import fghost.carview.v1.users.model.response.UserResponseCar;
 import fghost.carview.v1.users.model.response.UserResponsePreference;
 import fghost.carview.v1.users.model.response.UserResponseSummary;
 import fghost.carview.v1.users.service.UserService;
@@ -52,6 +53,12 @@ public class UserFacade {
     public UserResponsePreference getPreferences(String code) {
         var entity = usersService.findByCode(code);
         var dto = UserResponseMapper.INSTANCE.mapEntityToPreference(entity);
+        return dto;
+    }
+
+    public UserResponseCar getCars(String code) {
+        var entity = usersService.findByCode(code);
+        var dto = UserResponseMapper.INSTANCE.mapEntityToCar(entity);
         return dto;
     }
 

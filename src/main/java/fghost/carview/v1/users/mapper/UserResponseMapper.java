@@ -1,11 +1,9 @@
 package fghost.carview.v1.users.mapper;
+
 import fghost.carview.v1.storage.StorageService;
 import fghost.carview.v1.users.domain.UserEntity;
 import fghost.carview.v1.users.domain.UserPhotoEntity;
-import fghost.carview.v1.users.model.response.UserResponse;
-import fghost.carview.v1.users.model.response.UserResponsePreference;
-import fghost.carview.v1.users.model.response.UserResponseProfile;
-import fghost.carview.v1.users.model.response.UserResponseSummary;
+import fghost.carview.v1.users.model.response.*;
 import fghost.carview.v1.users.model.response.permissions.UserResponsePermissionWrapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,6 +22,10 @@ public interface UserResponseMapper {
 
     @Mapping(target = "fullName", expression = "java(entity.getNomeCompleto())")
     UserResponsePreference mapEntityToPreference(UserEntity entity);
+
+
+    @Mapping(target = "fullName", expression = "java(entity.getNomeCompleto())")
+    UserResponseCar mapEntityToCar(UserEntity entity);
 
     UserResponsePermissionWrapper mapEntityToPermission(UserEntity entity);
 
