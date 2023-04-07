@@ -8,6 +8,7 @@ import fghost.carview.v1.users.domain.Preference;
 import fghost.carview.v1.users.dto.UserDtoUpdate;
 import fghost.carview.v1.users.model.request.UserRequest;
 import fghost.carview.v1.users.model.response.UserResponse;
+import fghost.carview.v1.users.model.response.UserResponseCar;
 import fghost.carview.v1.users.model.response.UserResponsePreference;
 import fghost.carview.v1.users.model.response.UserResponseSummary;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,6 +54,12 @@ public class UserController {
     @GetMapping("/{id}/preferences")
     public ResponseEntity<UserResponsePreference> getPreferences(@PathVariable(name = "id") String code) {
         var response = usersFacade.getPreferences(code);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/cars")
+    public ResponseEntity<UserResponseCar> getCars(@PathVariable(name = "id") String code) {
+        var response = usersFacade.getCars(code);
         return ResponseEntity.ok(response);
     }
 
