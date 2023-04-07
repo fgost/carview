@@ -18,4 +18,7 @@ public class Car {
 
     @NotBlank
     private String year;
+
+    @NotBlank
+    private String code;
 }
