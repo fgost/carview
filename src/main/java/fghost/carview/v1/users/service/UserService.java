@@ -178,7 +178,11 @@ public class UserService {
         var entity = findByCode(code);
         inputList.forEach(input -> {
             var car = carService.findByCode(input.getCode());
-            entity.getCars().add(car);
+            if (!entity.getCars().contains(car)) {
+                entity.getCars().add(car);
+            } else {
+                throw ExceptionUtils.buildNotPersistedException(Constants.CAR_DUPLICATED);
+            }
         });
         return repository.save(entity);
     }
