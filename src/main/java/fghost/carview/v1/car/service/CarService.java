@@ -36,8 +36,9 @@ public class CarService {
     }
 
     public CarEntity findByCode(String code) {
-        return repository.findByCode(code)
+        var entity = repository.findByCode(code)
                 .orElseThrow(() -> new ObjectNotFoundException(Constants.CAR_NOT_FOUND));
+        return entity;
     }
 
     @Transactional
