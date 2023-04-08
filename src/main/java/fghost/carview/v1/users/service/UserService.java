@@ -176,13 +176,10 @@ public class UserService {
     @Transactional
     public UserEntity updateCar(String code, Set<OnlyCodeDto> inputList) {
         var entity = findByCode(code);
+        entity.getCars().clear();
         inputList.forEach(input -> {
             var car = carService.findByCode(input.getCode());
-            if (!entity.getCars().contains(car)) {
-                entity.getCars().add(car);
-            } else {
-                throw ExceptionUtils.buildNotPersistedException(Constants.CAR_DUPLICATED);
-            }
+            entity.getCars().add(car);
         });
         return repository.save(entity);
     }

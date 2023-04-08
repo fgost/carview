@@ -9,3 +9,5 @@ databaseChangeLog:
       file: db/migration/04-create_table_access_groups.sql
   - include:
       file: db/migration/05-create_table_cars.sql
+  - include:
+      file: db/initialize/initialize_car.sql
