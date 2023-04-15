@@ -35,4 +35,10 @@ public class Constants {
     public static final String CAR_NOT_FOUND = "car.not.found";
     public static final String CAR_NOT_PERSISTED = "car.not.persisted";
     public static final String CAR_DELETION_ERROR = "car.deletion.error";
+
+    //CATEGORY
+    public  static final String CATEGORY_NOT_FOUND = "category.duplicated";
+    public static final String CATEGORY_DUPLICATED = "category.not.found";
+    public static final String CATEGORY_NOT_PERSISTED = "category.not.persisted";
+    public static final String CATEGORY_DELETION_ERROR = "category.deletion.error";
 }

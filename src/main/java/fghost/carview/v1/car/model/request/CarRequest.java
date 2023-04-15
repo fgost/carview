@@ -1,4 +1,4 @@
-package fghost.carview.v1.car.model;
+package fghost.carview.v1.car.model.request;
 
 import fghost.carview.v1.car.domain.CarTypeEnum;
 import io.swagger.annotations.ApiModelProperty;

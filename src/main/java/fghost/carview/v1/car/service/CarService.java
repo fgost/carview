@@ -3,8 +3,12 @@ package fghost.carview.v1.car.service;
 import fghost.carview.domain.Constants;
 import fghost.carview.exception.domain.ObjectNotFoundException;
 import fghost.carview.exception.util.ExceptionUtils;
+import fghost.carview.utils.dto.OnlyCodeDto;
 import fghost.carview.v1.car.domain.CarEntity;
 import fghost.carview.v1.car.repository.CarRepository;
+import fghost.carview.v1.category.domain.CategoryEntity;
+import fghost.carview.v1.category.service.CategoryService;
+import fghost.carview.v1.users.domain.UserEntity;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,10 +16,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @AllArgsConstructor
 @Service
 public class CarService {
     private final CarRepository repository;
+
+    private final CategoryService categoryService;
 
     public Page<CarEntity> findAll(Pageable pageable, String carModel, String year) {
         boolean hasCarModel = carModel != null && !carModel.isBlank();
@@ -65,6 +76,21 @@ public class CarService {
         }catch (Exception e) {
             throw ExceptionUtils.buildNotPersistedException(Constants.CAR_NOT_PERSISTED);
         }
+    }
+
+    @Transactional
+    public CarEntity updateCategory(String code, Set<OnlyCodeDto> inputList) {
+        var entity = findByCode(code);
+        entity.getCategories().clear();
+        List<CategoryEntity> categoriesToAdd = new ArrayList<>();
+        inputList.forEach(input -> {
+            var category = categoryService.findByCode(input.getCode());
+            if (!categoriesToAdd.contains(category)) {
+                categoriesToAdd.add(category);
+            }
+        });
+        entity.setCategories(categoriesToAdd);
+        return repository.save(entity);
     }
 
     @Transactional

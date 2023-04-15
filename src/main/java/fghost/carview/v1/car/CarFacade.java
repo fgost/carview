@@ -1,18 +1,21 @@
 package fghost.carview.v1.car;
 
+import fghost.carview.utils.dto.OnlyCodeDto;
 import fghost.carview.utils.pagination.DefaultWrapper;
 import fghost.carview.utils.pagination.PaginationRequest;
 import fghost.carview.utils.pagination.PaginationUtils;
 import fghost.carview.v1.car.mapper.CarRequestMapper;
 import fghost.carview.v1.car.mapper.CarResponseMapper;
-import fghost.carview.v1.car.model.CarRequest;
-import fghost.carview.v1.car.model.CarResponse;
+import fghost.carview.v1.car.model.request.CarRequest;
+import fghost.carview.v1.car.model.response.CarResponse;
+import fghost.carview.v1.car.model.response.CarResponseCategory;
 import fghost.carview.v1.car.service.CarService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -36,6 +39,12 @@ public class CarFacade {
         return dto;
     }
 
+    public CarResponseCategory getCategories(String code) {
+        var entity = carService.findByCode(code);
+        var dto = CarResponseMapper.INSTANCE.mapEntityToCategory(entity);
+        return dto;
+    }
+
     public CarResponse insert(CarRequest input) {
         var entity = CarRequestMapper.INSTANCE.mapModelToEntity(input);
         var savedEntity = carService.insert(entity);
@@ -50,8 +59,13 @@ public class CarFacade {
         return dto;
     }
 
+    public CarResponse updateCategory(String code, Set<OnlyCodeDto> inputList) {
+        var entity = carService.updateCategory(code, inputList);
+        var dto = CarResponseMapper.INSTANCE.mapEntityToCarResponse(entity);
+        return dto;
+    }
+
     public void deleteByCode(String code) {
         carService.deleteByCode(code);
     }
-
 }
