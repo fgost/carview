@@ -1,7 +1,7 @@
 package fghost.carview.v1.car.mapper;
 
 import fghost.carview.v1.car.domain.CarEntity;
-import fghost.carview.v1.car.model.CarRequest;
+import fghost.carview.v1.car.model.request.CarRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

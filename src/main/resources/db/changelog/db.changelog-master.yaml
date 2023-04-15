@@ -10,4 +10,8 @@ databaseChangeLog:
   - include:
       file: db/migration/05-create_table_cars.sql
   - include:
+      file: db/migration/06-create_table_categories.sql
+  - include:
       file: db/initialize/initialize_car.sql
+  - include:
+      file: db/initialize/initialize_category.sql
