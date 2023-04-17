@@ -15,6 +15,4 @@ public interface CarResponseMapper {
     CarResponse mapEntityToCarResponse(CarEntity entity);
 
     CarResponseCategory mapEntityToCategory(CarEntity entity);
-
-
 }

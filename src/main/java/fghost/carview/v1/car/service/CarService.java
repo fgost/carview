@@ -7,17 +7,17 @@ import fghost.carview.utils.dto.OnlyCodeDto;
 import fghost.carview.v1.car.domain.CarEntity;
 import fghost.carview.v1.car.repository.CarRepository;
 import fghost.carview.v1.category.domain.CategoryEntity;
+import fghost.carview.v1.category.repository.CategoryRepository;
 import fghost.carview.v1.category.service.CategoryService;
-import fghost.carview.v1.users.domain.UserEntity;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,8 +25,9 @@ import java.util.Set;
 @Service
 public class CarService {
     private final CarRepository repository;
-
+    private final CategoryRepository categoryRepository;
     private final CategoryService categoryService;
+    private final JdbcTemplate jdbcTemplate;
 
     public Page<CarEntity> findAll(Pageable pageable, String carModel, String year) {
         boolean hasCarModel = carModel != null && !carModel.isBlank();
@@ -54,9 +55,19 @@ public class CarService {
 
     @Transactional
     public CarEntity insert(CarEntity carEntity) {
-        try{
-            return repository.save(carEntity);
-        }catch (DataIntegrityViolationException ex) {
+        try {
+
+            CarEntity savedCar = repository.save(carEntity);
+
+            List<Integer> categoryIds = categoryRepository.findAllIds();
+
+            for (Integer categoryId : categoryIds) {
+                String sql = "INSERT INTO categories_cars (car_id, category_id) VALUES (?, ?)";
+                jdbcTemplate.update(sql, savedCar.getId(), categoryId);
+            }
+
+            return savedCar;
+        } catch (DataIntegrityViolationException ex) {
             throw ExceptionUtils.buildSameIdentifierException(Constants.CAR_DUPLICATED);
         }
     }

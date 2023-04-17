@@ -4,6 +4,7 @@ import fghost.carview.domain.Constants;
 import fghost.carview.exception.domain.ObjectNotFoundException;
 import fghost.carview.exception.util.ExceptionUtils;
 import fghost.carview.v1.category.domain.CategoryEntity;
+import fghost.carview.v1.category.domain.CategoryEnum;
 import fghost.carview.v1.category.repository.CategoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -16,10 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryService {
     private final CategoryRepository repository;
-    public Page<CategoryEntity> findAll(Pageable pageable, String categoryName) {
-        boolean hasName = categoryName != null && !categoryName.isBlank();
+
+    public Page<CategoryEntity> findAll(Pageable pageable, CategoryEnum category) {
+        boolean hasName = category != null;
         if (hasName)
-            return repository.findByCategoryNameContainingIgnoreCase(pageable, categoryName);
+            return repository.findByCategoryContainingIgnoreCase(pageable, category);
 
         return repository.findAll(pageable);
     }
@@ -43,7 +45,7 @@ public class CategoryService {
     public CategoryEntity update(String code, CategoryEntity entity) {
         var existentEntity = findByCode(code);
         existentEntity.setCode(code);
-        existentEntity.setCategoryName(entity.getCategoryName());
+        existentEntity.setCategory(entity.getCategory());
 
         var dto = existentEntity;
         try {
