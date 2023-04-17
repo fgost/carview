@@ -1,7 +1,7 @@
 package fghost.carview.v1.category.mapper;
 
 import fghost.carview.v1.category.domain.CategoryEntity;
-import fghost.carview.v1.category.model.CategoryRequest;
+import fghost.carview.v1.category.model.request.CategoryRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

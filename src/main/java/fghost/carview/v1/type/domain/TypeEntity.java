@@ -1,6 +1,5 @@
-package fghost.carview.v1.category.domain;
+package fghost.carview.v1.type.domain;
 
-import fghost.carview.v1.type.domain.TypeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +8,6 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -17,28 +15,19 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "categories")
-public class CategoryEntity implements Serializable {
+@Table(name = "types")
+public class TypeEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String code;
-    private CategoryEnum category;
-
-    @ManyToMany
-    @JoinTable(
-            name = "categories_types",
-            joinColumns = @JoinColumn(name = "type_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private List<TypeEntity> types;
+    private TypeEnum typeName;
 
     @PrePersist
     private void setCode() {
         this.code = UUID.randomUUID().toString();
     }
-
 }

@@ -4,9 +4,6 @@ import fghost.carview.v1.car.domain.CarEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -22,9 +19,4 @@ public interface CarRepository extends JpaRepository<CarEntity, Long> {
     Page<CarEntity> findByCarModelContainingIgnoreCase(Pageable pageable, String carModel);
 
     Page<CarEntity> findByCarModelContainingIgnoreCaseOrYearContainingIgnoreCase(Pageable pageable, String carModel, String year);
-
-    @Modifying
-    @Query(value = "DELETE FROM categories_cars WHERE car_id = :carId", nativeQuery = true)
-    void deleteAllByCarId(@Param("carId") Long carId);
-
 }

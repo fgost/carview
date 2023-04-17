@@ -2,8 +2,10 @@ package fghost.carview.v1.category;
 
 import fghost.carview.utils.pagination.DefaultWrapper;
 import fghost.carview.utils.pagination.PaginationRequest;
-import fghost.carview.v1.category.model.CategoryRequest;
-import fghost.carview.v1.category.model.CategoryResponse;
+import fghost.carview.v1.category.domain.CategoryEnum;
+import fghost.carview.v1.category.model.request.CategoryRequest;
+import fghost.carview.v1.category.model.response.CategoryResponse;
+import fghost.carview.v1.category.model.response.CategoryResponseType;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -25,15 +27,21 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<DefaultWrapper> findAll(
-            @RequestParam(name = "categoryName", defaultValue = "") String categoryName,
+            @RequestParam(name = "category", defaultValue = "") CategoryEnum category,
             PaginationRequest paginationRequest) {
-        var response = categoryFacade.findAll(paginationRequest, categoryName);
+        var response = categoryFacade.findAll(paginationRequest, category);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> findByCode(@PathVariable(name = "id") String code) {
         var response = categoryFacade.findByCode(code);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/types")
+    public ResponseEntity<CategoryResponseType> getTypes(@PathVariable(name = "id") String code) {
+        var response = categoryFacade.getTypes(code);
         return ResponseEntity.ok(response);
     }
 
